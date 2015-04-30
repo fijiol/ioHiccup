@@ -10,10 +10,10 @@ public class IOHic {
     public long i2oLatency;
     public long i2oReadTime;
     public long i2oWriteTime;
-    public boolean i2oLastRead;
+    public boolean i2oPending;
     
     public long o2iLatency;
     public long o2iReadTime;
     public long o2iWriteTime;
-    public boolean o2iLastWrite;
+    public boolean o2iPending;
 }

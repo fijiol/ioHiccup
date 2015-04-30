@@ -127,17 +127,21 @@ public class Accumulator {
     public static String _writeBefore(String ioHiccup, String ioHic) {
         return _timestampStub("putTimestampWriteBefore", ioHiccup, ioHic);
     }
-    
-    
-    
-    
+
+
+
+
     public static void putTimestampReadAfter(IOHiccup ioHiccup, IOHic hic) {
         if (null == ioHiccup || hic == null) {
             return;
         }
-        
+
+        if (hic.i2oPending) {
+            return;
+        }
+
         hic.i2oReadTime = System.nanoTime();
-        hic.i2oLastRead = true;
+        hic.i2oPending = true;
     }
     
     public static void putTimestampWriteBefore(IOHiccup ioHiccup, IOHic hic) {
@@ -146,19 +150,23 @@ public class Accumulator {
         }
         
         hic.i2oWriteTime = System.nanoTime();
-        if (hic.i2oLastRead && (hic.i2oLatency = hic.i2oWriteTime - hic.i2oReadTime) > 0) {
+        if (hic.i2oPending && (hic.i2oLatency = hic.i2oWriteTime - hic.i2oReadTime) > 0) {
             ioHiccup.i2oLS.recordLatency(hic.i2oLatency);
         }
-        hic.i2oLastRead = false;
+        hic.i2oPending = false;
     }
     
     public static void putTimestampWriteAfter(IOHiccup ioHiccup, IOHic hic) {
         if (null == ioHiccup || hic == null) {
             return;
         }
+
+        if (hic.o2iPending) {
+            return;
+        }
         
         hic.o2iReadTime = System.nanoTime();
-        hic.o2iLastWrite = true;
+        hic.o2iPending = true;
     }
     
     public static void putTimestampReadBefore(IOHiccup ioHiccup, IOHic hic) {
@@ -167,10 +175,10 @@ public class Accumulator {
         }
         
         hic.o2iWriteTime = System.nanoTime();
-        if (hic.o2iLastWrite && (hic.o2iLatency = hic.o2iWriteTime - hic.o2iReadTime) > 0) {
+        if (hic.o2iPending && (hic.o2iLatency = hic.o2iWriteTime - hic.o2iReadTime) > 0) {
             ioHiccup.o2iLS.recordLatency(hic.o2iLatency);
         }
-        hic.o2iLastWrite = false;
+        hic.o2iPending = false;
     }
     
 }
