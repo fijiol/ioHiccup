@@ -60,8 +60,8 @@ public class Accumulator {
                 }
             }
         }
-        
-        //System.out.println("Calculate response time between " + remoteAddress + ":" + remotePort + " <-> " + "127.0.0.1:" + localPort + " === " + matched); //Print on debug level?
+       if (jRT.configuration.debug) 
+		System.out.println("remote-addr:remote-port <-> 127.0.0.1:local-port # " + remoteAddress + ":" + remotePort + " <-> " + "127.0.0.1:" + localPort + " === " + matched);
         
         return matched;
     }    

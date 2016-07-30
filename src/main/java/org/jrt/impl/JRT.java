@@ -212,6 +212,10 @@ public class JRT {
                 if (hasKey(o2ienabling, vArr[0])) {
                     configuration.o2iEnabled = Boolean.valueOf(vArr[1]);
                 }
+                if (hasKey(debug, vArr[0])) {
+		     if ("true".equals(vArr[1]))
+			configuration.debug = true;
+		}
                 if (hasKey(ioMode, vArr[0])) {
                     if ("i2o".equals(vArr[1])) {
                         configuration.i2oEnabled = true;
@@ -296,6 +300,7 @@ public class JRT {
     private static final String[] ioMode = {"-mode"};
     private static final String[] i2oenabling = {"-i2o"};
     private static final String[] o2ienabling = {"-o2i"};
+    private static final String[] debug = {"-d","debug"};
 
     private static boolean hasKey(String[] list, String key) {
         for (String s : list) {
