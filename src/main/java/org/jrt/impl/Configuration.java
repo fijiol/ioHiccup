@@ -18,6 +18,7 @@ public class Configuration {
     
     public boolean i2oEnabled   = true;
     public boolean o2iEnabled   = true;
+    public boolean debug 	= false;
     public long logWriterInterval = 1000;
     //equal to jRT.jar=-lp=jRTs.%d.%p-%h.%i
     public String logPrefix = "jRTs." +  (new SimpleDateFormat("MMddyy-hhmm")).format(new Date()) + "." + 
